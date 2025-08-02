@@ -15,7 +15,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardItem> onboardingData = [
     OnboardItem(
-      title: "مرحباً في أبها",
+      title: "مرحباً ألف في أبها",
       image: "assets/images/boarding1.png",
       desc: "دليلك لاكتشاف أفضل المعالم السياحية بأسلوب سهل وممتع",
     ),
@@ -36,10 +36,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
   ];
 
-  void nextPage() {
+  void nextPage()async {
     if (_currentPage < onboardingData.length - 1) {
       _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
     } else {
+      // final prefs = await SharedPreferences.getInstance();
+      // prefs.remove('hasShownShowcase');
       Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => SignUpScreen()));

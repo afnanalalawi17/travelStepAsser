@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart'
     as carousel_slider; // Alias the carousel_slider import
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:travel_step/view/map.dart';
 import 'package:travel_step/view/naroAI.dart';
@@ -63,19 +64,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
-      if (mounted) {
-        ShowCaseWidget.of(myContext!).startShowCase([
-          _carouselKey,
-          _servicesKey,
-          _bookingsKey,
-          _aiGuideKey,
-          _calendarKey,
-          _mapKey,
-          _walletKey,
-        ]);
-      }
-    });
+    _checkAndShowShowcase();
+  }
+
+  void _checkAndShowShowcase() async {
+    final prefs = await SharedPreferences.getInstance();
+    final hasShown = prefs.getBool('hasShownShowcase') ?? false;
+
+    if (!hasShown) {
+      // Wait until the widget is built
+      Future.delayed(Duration(milliseconds: 500), () {
+        if (mounted && myContext != null) {
+          ShowCaseWidget.of(myContext!).startShowCase([
+            _carouselKey,
+            _servicesKey,
+            _bookingsKey,
+            _aiGuideKey,
+            _calendarKey,
+            _mapKey,
+            _walletKey,
+          ]);
+
+          // Save that it has been shown
+          prefs.setBool('hasShownShowcase', true);
+        }
+      });
+    }
   }
 
 

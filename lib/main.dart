@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_step/view/boarding.dart';
 import 'package:travel_step/view/bottom_nav_bar.dart';
 import 'package:travel_step/view/home.dart';
@@ -19,6 +20,9 @@ import 'package:showcaseview/showcaseview.dart'; // ✅ أضف هذا
 import 'package:travel_step/view/boarding.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+
   runApp(
     ShowCaseWidget(
       builder: Builder(
